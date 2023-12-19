@@ -55,17 +55,10 @@ public class Task2 {
                 int position = getPositionRelativeToCircle(x, y, centerX, centerY, radius);
 
                 switch (position) {
-                    case 0:
-                        System.out.println(" 0 - точка лежит на окружности");
-                        break;
-                    case 1:
-                        System.out.println(" 1 - точка внутри окружности");
-                        break;
-                    case 2:
-                        System.out.println(" 2 - точка снаружи окружности");
-                        break;
-                    default:
-                        System.out.println("Неизвестное положение точки");
+                    case 0 -> System.out.println(" 0 - точка лежит на окружности");
+                    case 1 -> System.out.println(" 1 - точка внутри окружности");
+                    case 2 -> System.out.println(" 2 - точка снаружи окружности");
+                    default -> System.out.println("Неизвестное положение точки");
                 }
             }
 
