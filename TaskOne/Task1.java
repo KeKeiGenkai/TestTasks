@@ -3,58 +3,62 @@ package TaskOne;
 import  java.util.Scanner;
 
 public class Task1 {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("n = ");
-        int n = scanner.nextInt();
-        System.out.print("m = ");
-        int m = scanner.nextInt();
-        scanner.close();
 
-        if (n <= 0 || m <= 0){
-            System.out.println("Err");
-            return;
+        System.out.print("Длинна массива: ");
+        int n = readInt(scanner);
+
+        System.out.print("Длинна шага: ");
+        int m = readInt(scanner);
+
+        int[] circularArray = new int[n];
+        for (int i = 0; i < n; i++) {
+            circularArray[i] = i + 1;
         }
 
-        int[] array = new int[n];
-        for (int i = 0; i < n; i++){
-            array[i] = i + 1 ;
-        }
+        int[] path = findCircularArrayPath(circularArray, m);
 
-        int[] result = path(array, m);
-
-        int lastVal = result[result.length - 1];
-        for (int i = result.length - 1; i > 0; i--){
-            result[i] = result[i - 1];
-        }
-        result[0] = lastVal;
-
-        for (int value : result) {
-            System.out.print(value);
+        for (int i : path) {
+            System.out.print(i);
         }
     }
-    private static int[] path(int[] array, int m) {
-        int[] result = new int[array.length];
-        int index = 0;
-        boolean[] visited = new boolean[array.length];
 
-        for (int i = 0; i < array.length; i++) {
-            index = (index + (m - 1)) % array.length;
-
-            while (visited[index]) {
-                int[] trim = new int[i];
-                System.arraycopy(result, 0, trim, 0, i);
-
-                System.out.print("Result: ");
-                for (int value : trim) {
-                    System.out.print(value);
-                }
-                System.exit(0);
-            }
-
-            visited[index] = true;
-            result[i] = array[index];
+    private static int readInt(Scanner scanner) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Пожалуйста, введите целое число.");
+            scanner.next();
         }
+        return scanner.nextInt();
+    }
+
+    private static int[] findCircularArrayPath(int[] circularArray, int m) {
+        int[] path = new int[circularArray.length];
+        int currentIndex = 0;
+
+        for (int i = 0; i < circularArray.length; i++) {
+            int currentNumber = circularArray[currentIndex];
+
+            path[i] = currentNumber;
+
+            int nextIndex = (currentIndex + m - 1) % circularArray.length;
+            circularArray[currentIndex] = 0;
+            currentIndex = nextIndex;
+        }
+
+        int nonZeroCount = 0;
+        for (int i : path) {
+            if (i != 0) {
+                nonZeroCount++;
+            }
+        }
+        int[] result = new int[nonZeroCount];
+        for (int i = 0, j = 0; i < path.length; i++) {
+            if (path[i] != 0) {
+                result[j++] = path[i];
+            }
+        }
+
         return result;
     }
 }
