@@ -1,4 +1,4 @@
-package TaskTwo;
+package Task2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
